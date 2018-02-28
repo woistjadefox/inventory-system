@@ -16,6 +16,8 @@ public class SimpleCharacterController : MonoBehaviour
     private float groundRaycastOffset = -0.5f;
     [SerializeField]
     private float groundRaycastLength = 0.5f;
+    [SerializeField]
+    private LayerMask groundLayers;
 
     private Vector2 inputAxis;
     private bool inputJump;
@@ -96,7 +98,7 @@ public class SimpleCharacterController : MonoBehaviour
 
         Debug.DrawRay(origin, dir, Color.red, Time.deltaTime);
 
-        if(Physics.Raycast(origin, dir, groundRaycastLength))
+        if(Physics.Raycast(origin, dir, groundRaycastLength, groundLayers))
         {
             return true;
         }
