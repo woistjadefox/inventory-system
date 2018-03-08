@@ -13,6 +13,17 @@ namespace Zhdk.Gamelab.InventorySystem
         [SerializeField]
         private Sprite sprite;
 
+
+        public string GetTitle ()
+        {
+            return title;
+        }
+
+        public Sprite GetSprite () 
+        {
+            return sprite;
+        }
+
     }
 
 }

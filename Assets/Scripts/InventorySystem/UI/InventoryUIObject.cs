@@ -1,29 +1,53 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Zhdk.Gamelab.InventorySystem {
 
-    public class InventoryUISlotObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class InventoryUIObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
 
-        public static InventoryUISlotObject currentObject;
+        public static InventoryUIObject currentObject;
+
+        [SerializeField]
+        private InventoryObject inventoryObject;
+        [SerializeField]
+        private InventoryHolder holder;
+        [SerializeField]
+        private Image image;
 
         private InventoryUISlot currentSlot;
         private Transform emptyParent;
         private InventoryUISlot startSlot;
-
         private new Transform transform;
 
-        private void Awake()
+        public void Init()
         {
-            GetTransform();
-            emptyParent = transform.parent.parent.parent;
+            emptyParent = GetTransform().parent.parent.parent;
+            image.sprite = inventoryObject.GetSprite();
+
         }
 
         public Transform GetTransform() 
         {
             if (transform == null) transform = GetComponent<Transform>();
             return transform;
+        }
+
+        public void SetHolder(InventoryHolder holder) 
+        {
+            this.holder = holder;
+            inventoryObject = holder.GetInventoryObject();
+        }
+
+        public InventoryObject GetInventoryObject()
+        {
+            return inventoryObject;
+        }
+
+        public InventoryHolder GetHolder () 
+        {
+            return holder;
         }
 
         public InventoryUISlot GetCurrentSlot() 
@@ -34,6 +58,7 @@ namespace Zhdk.Gamelab.InventorySystem {
         public void SetCurrentSlot(InventoryUISlot slot) 
         {
             currentSlot = slot;
+            currentSlot.SetInventoryUIObject(this);
             GetTransform().SetParent(slot.GetTransform());
             GetTransform().localPosition = Vector3.zero;
         }
@@ -41,9 +66,9 @@ namespace Zhdk.Gamelab.InventorySystem {
         public void OnBeginDrag(PointerEventData eventData)
         {
             currentObject = this;
-            startSlot = currentObject.GetCurrentSlot();
             currentObject.GetTransform().SetParent(emptyParent);
             currentObject.GetTransform().SetAsFirstSibling();
+            startSlot = currentObject.GetCurrentSlot();
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -53,7 +78,6 @@ namespace Zhdk.Gamelab.InventorySystem {
 
         public void OnEndDrag(PointerEventData eventData)
         {
-
             if(startSlot == GetCurrentSlot()) {
                 GetTransform().SetParent(GetCurrentSlot().GetTransform());
                 GetTransform().localPosition = Vector3.zero;
