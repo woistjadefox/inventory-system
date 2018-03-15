@@ -1,40 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using Zhdk.Gamelab.InventorySystem;
 
 
-public class InventoryObjectCheck : MonoBehaviour
-{
-    [Header("References")]
-    [SerializeField]
-    private InventoryObject[] inventoryObjects;
-    [SerializeField]
-    private Inventory inventory;
+namespace Zhdk.Gamelab.InventorySystem {
 
-    [Header("Events")]
-    [SerializeField]
-    private UnityEvent onIsInventoryEvent;
-    [SerializeField]
-    private UnityEvent onIsNotInventoryEvent;
+    public class InventoryObjectCheck : MonoBehaviour {
+        [Header("References")]
+        [SerializeField]
+        private InventoryObject[] inventoryObjects;
+        [SerializeField]
+        private Inventory inventory;
 
-    public void Check()
-    {
-        bool oneExists = false;
+        [Header("Events")]
+        [SerializeField]
+        private UnityEvent onIsInventoryEvent;
+        [SerializeField]
+        private UnityEvent onIsNotInventoryEvent;
 
-        foreach(InventoryObject inventoryObject in inventoryObjects) {
-            if (inventory.IsInInventory(inventoryObject)) {
-                oneExists = true;
+        public void Check() {
+            bool oneExists = false;
+
+            foreach (InventoryObject inventoryObject in inventoryObjects) {
+                if (inventory.IsInInventory(inventoryObject)) {
+                    oneExists = true;
+                }
+            }
+
+            if (oneExists) {
+                onIsInventoryEvent.Invoke();
+            } else {
+                onIsNotInventoryEvent.Invoke();
             }
         }
 
-        if(oneExists) {
-            onIsInventoryEvent.Invoke();
-        } else {
-            onIsNotInventoryEvent.Invoke();
-        }
     }
-       
 }
+
 
 
 

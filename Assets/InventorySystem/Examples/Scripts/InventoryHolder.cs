@@ -1,27 +1,26 @@
 ﻿using UnityEngine;
-using Zhdk.Gamelab.InventorySystem;
 
+namespace Zhdk.Gamelab.InventorySystem {
 
-public class InventoryHolder : MonoBehaviour
-{
-    [Header("References")]
-    [SerializeField]
-    private InventoryObject inventoryObject;
-    [SerializeField]
-    private Inventory inventory;
+    public class InventoryHolder : MonoBehaviour {
+        [Header("References")]
+        [SerializeField]
+        private InventoryObject inventoryObject;
+        [SerializeField]
+        private Inventory inventory;
 
-    [Header("Pickup Settings")]
-    [SerializeField]
-    private bool deleteOnPickup = true;
+        [Header("Pickup Settings")]
+        [SerializeField]
+        private bool deleteOnPickup = true;
 
-    public void PickUp () {
-            
-        if(inventory.AddInventoryObject(inventoryObject)) {
-            if (deleteOnPickup) Destroy(gameObject);
+        public void PickUp() {
+
+            if (inventory.AddInventoryObject(inventoryObject)) {
+                if (deleteOnPickup) Destroy(gameObject);
+            }
         }
+
     }
-
 }
-
 
 
