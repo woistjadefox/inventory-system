@@ -16,5 +16,4 @@ MonoBehaviour:
   inventorySlots: 15
   logWarnings: 1
   startSpecialInventoryObject: {fileID: 0}
-  startInventoryObjects:
-  - {fileID: 11400000, guid: 9c72cebb7003a4703bd40af01fcf7065, type: 2}
+  startInventoryObjects: []

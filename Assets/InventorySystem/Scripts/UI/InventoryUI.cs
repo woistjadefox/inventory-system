@@ -8,6 +8,8 @@ namespace Zhdk.Gamelab.InventorySystem
     public class InventoryUI : MonoBehaviour
     {
 
+        public delegate void OnDropInventoryUIObject(InventoryUIObject inventoryUIObject);
+
         [Header("References")]
         [SerializeField]
         private Inventory inventory;
@@ -32,6 +34,7 @@ namespace Zhdk.Gamelab.InventorySystem
         private List<InventoryUISlot> slots;
 
         private InventoryUIObject currentSelectedInventoryUIObject;
+        private event OnDropInventoryUIObject onDropInventoryUIObject;
 
 		private void OnDestroy()
 		{
@@ -217,7 +220,16 @@ namespace Zhdk.Gamelab.InventorySystem
 
         public void DropCurrentSelectedInventoryUIObject() {
             inventory.RemoveInventoryObject(currentSelectedInventoryUIObject.GetInventoryObject());
+            if(onDropInventoryUIObject != null) onDropInventoryUIObject(currentSelectedInventoryUIObject);
             panelDescription.SetActive(false);
+        }
+
+        public void AddOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener) {
+            onDropInventoryUIObject += listener;
+        }
+
+        public void RemoveOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener) {
+            onDropInventoryUIObject -= listener;
         }
     }
 }

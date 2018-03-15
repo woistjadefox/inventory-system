@@ -13,10 +13,6 @@ public class SimpleInputManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Tab)) {
             onPressTabDown.Invoke();
         }
-
-        if(Input.GetKeyDown(KeyCode.R)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 }
 
