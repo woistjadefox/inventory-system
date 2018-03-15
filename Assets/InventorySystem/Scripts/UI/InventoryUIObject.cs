@@ -76,7 +76,12 @@ namespace Zhdk.Gamelab.InventorySystem {
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if(startSlot == GetCurrentSlot()) {
+
+            if (EventSystem.current.IsPointerOverGameObject(eventData.pointerId) == false) {
+                Debug.Log("Outside UI");
+            }
+
+            if (startSlot == GetCurrentSlot()) {
                 GetTransform().SetParent(GetCurrentSlot().GetTransform());
                 GetTransform().localPosition = Vector3.zero;
             }

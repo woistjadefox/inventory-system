@@ -12,9 +12,13 @@ namespace Zhdk.Gamelab.InventorySystem
         [SerializeField]
         private Inventory inventory;
         [SerializeField]
+        private InventoryUISlot slotSpecial;
+        [SerializeField]
         private GameObject panel;
         [SerializeField]
-        private InventoryUISlot slotSpecial;
+        private GameObject panelDescription;
+        [SerializeField]
+        private Text textTitle;
         [SerializeField]
         private Text textDescription;
 
@@ -26,6 +30,8 @@ namespace Zhdk.Gamelab.InventorySystem
 
         [SerializeField]
         private List<InventoryUISlot> slots;
+
+        private InventoryUIObject currentSelectedInventoryUIObject;
 
 		private void OnDestroy()
 		{
@@ -57,8 +63,12 @@ namespace Zhdk.Gamelab.InventorySystem
                 inventory.MoveSpecialInventoryObjectToNormal(inventoryUIObject.GetInventoryObject());
             }
 
-            // save wish pos
-            inventoryUIObject.GetInventoryObject().SetCurrentPos(slots.IndexOf(newSlot));
+            // set wish pos
+            if(newSlot != slotSpecial) {
+                inventoryUIObject.GetInventoryObject().SetCurrentPos(slots.IndexOf(newSlot));
+            } else {
+                inventoryUIObject.GetInventoryObject().SetCurrentPos(0);
+            }
         }
 
 		private void Start()
@@ -100,6 +110,7 @@ namespace Zhdk.Gamelab.InventorySystem
         public void TogglePanel() 
         {
             if(InventoryUIObject.currentObject == null) {
+                if (panel.activeSelf) panelDescription.SetActive(false);
                 panel.SetActive(!panel.activeSelf);
             }
 
@@ -108,7 +119,7 @@ namespace Zhdk.Gamelab.InventorySystem
         public InventoryUISlot GetNextFreeSlot(int wishPos) 
         {
 
-            if(slots.Count > wishPos && slots[wishPos] != null) {
+            if(wishPos != -1 && slots.Count > wishPos && slots[wishPos] != null) {
                 if (slots[wishPos].IsEmpty()) return slots[wishPos];
             }
 
@@ -172,20 +183,41 @@ namespace Zhdk.Gamelab.InventorySystem
         {
 
             bool success = false;
-            
-            foreach (InventoryUISlot slot in slots)
-            {
 
-                if (slot.IsEmpty()) continue;
+            if(slotSpecial.IsEmpty() == false && slotSpecial.GetInventoryUIObject().GetInventoryObject() == inventoryObject) {
 
-                if (slot.GetInventoryUIObject().GetInventoryObject() == inventoryObject) {
-                    Destroy(slot.GetInventoryUIObject().gameObject);
-                    slot.SetInventoryUIObject(null);
-                    success = true;
+                Destroy(slotSpecial.GetInventoryUIObject().gameObject);
+                slotSpecial.SetInventoryUIObject(null);
+                success = true;
+
+            } else {
+
+                foreach (InventoryUISlot slot in slots) {
+                    if (slot.IsEmpty()) continue;
+
+                    if (slot.GetInventoryUIObject().GetInventoryObject() == inventoryObject) {
+                        Destroy(slot.GetInventoryUIObject().gameObject);
+                        slot.SetInventoryUIObject(null);
+                        success = true;
+                    }
                 }
             }
-
+            
             return success;
+        }
+
+        public void SelectInventoryUIObject(InventoryUIObject inventoryUIObject) {
+
+            textTitle.text = inventoryUIObject.GetInventoryObject().GetTitle();
+            textDescription.text = inventoryUIObject.GetInventoryObject().GetDescription();
+            panelDescription.SetActive(true);
+
+            currentSelectedInventoryUIObject = inventoryUIObject;
+        }
+
+        public void DropCurrentSelectedInventoryUIObject() {
+            inventory.RemoveInventoryObject(currentSelectedInventoryUIObject.GetInventoryObject());
+            panelDescription.SetActive(false);
         }
     }
 }

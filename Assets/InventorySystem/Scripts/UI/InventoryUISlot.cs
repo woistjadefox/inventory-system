@@ -48,7 +48,8 @@ namespace Zhdk.Gamelab.InventorySystem {
         public void OnDrop(PointerEventData eventData)
         {
 
-            if(inventoryUIObject == null) {
+
+            if (inventoryUIObject == null) {
                 InventoryUIObject.currentObject.GetCurrentSlot().SetInventoryUIObject(null);
                 SetInventoryUIObject(InventoryUIObject.currentObject);
                 InventoryUIObject.currentObject.SetCurrentSlot(this);

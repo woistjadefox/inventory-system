@@ -7,6 +7,8 @@ public class GenericTrigger : MonoBehaviour {
     [SerializeField]
     private bool ignoreIncomingTrigger = true;
     [SerializeField]
+    private LayerMask layerMask;
+    [SerializeField]
     private Collider[] specificCollider;
 
     [Header("Events")]
@@ -15,32 +17,52 @@ public class GenericTrigger : MonoBehaviour {
     [SerializeField]
     private UnityEvent onExit;
 
+    [Header("Key Events")]
+    [SerializeField]
+    private KeyCode onEnterKey = KeyCode.None;
+    [SerializeField]
+    private UnityEvent onEnterKeyDown;
+
+    private bool isActive = false;
+
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if(ignoreIncomingTrigger && other.isTrigger) {
-            return;
+        if (CheckConditions(other)) {
+            isActive = true;
+            onEnter.Invoke();
         }
-
-        if(CheckSpecificCollider(other) == false) {
-            return;
-        }
-
-        onEnter.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (CheckConditions(other)) {
+            isActive = false;
+            onExit.Invoke();
+        }
+    }
+
+    private void Update() {
+        if(isActive && onEnterKey != KeyCode.None && Input.GetKeyDown(onEnterKey)) {
+            onEnterKeyDown.Invoke();
+        }
+    }
+
+    private bool CheckConditions(Collider other) 
+    {
         if (ignoreIncomingTrigger && other.isTrigger) {
-            return;
+            return false;
         }
 
         if (CheckSpecificCollider(other) == false) {
-            return;
+            return false;
         }
 
-        onExit.Invoke();
+        if (IsInLayerMask(other.gameObject.layer, layerMask) == false) {
+            return false;
+        }
+
+        return true;
     }
 
     private bool CheckSpecificCollider(Collider targetCollider) {
@@ -59,6 +81,10 @@ public class GenericTrigger : MonoBehaviour {
         } else {
             return true;
         }
+    }
+
+    private bool IsInLayerMask(int layer, LayerMask layermask) {
+        return layermask == (layermask | (1 << layer));
     }
 
 }

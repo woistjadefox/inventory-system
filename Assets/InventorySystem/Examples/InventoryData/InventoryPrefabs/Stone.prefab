@@ -115,8 +115,6 @@ MonoBehaviour:
   inventoryObject: {fileID: 11400000, guid: 208cac5f670d54ba5acf67f1144153b1, type: 2}
   inventory: {fileID: 11400000, guid: 1269d4b6e737d4b2caaa3d50d47f66af, type: 2}
   deleteOnPickup: 1
-  pickupOnEnter: 0
-  pickUpKey: 13
 --- !u!114 &114502154715505818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,29 +127,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreIncomingTrigger: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   specificCollider: []
   onEnter:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114431068277260158}
-        m_MethodName: ActorIsClose
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onExit:
     m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnterKey: 13
+  onEnterKeyDown:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114431068277260158}
-        m_MethodName: ActorIsClose
-        m_Mode: 6
+        m_MethodName: PickUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
