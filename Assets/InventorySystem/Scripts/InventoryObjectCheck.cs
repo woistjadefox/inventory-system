@@ -5,11 +5,16 @@ using UnityEngine.Events;
 namespace Zhdk.Gamelab.InventorySystem {
 
     public class InventoryObjectCheck : MonoBehaviour {
+
         [Header("References")]
         [SerializeField]
         private InventoryObject[] inventoryObjects;
         [SerializeField]
         private Inventory inventory;
+
+        [Header("Settings")]
+        [SerializeField]
+        private bool isSpecialObject;
 
         [Header("Events")]
         [SerializeField]
@@ -21,7 +26,8 @@ namespace Zhdk.Gamelab.InventorySystem {
             bool oneExists = false;
 
             foreach (InventoryObject inventoryObject in inventoryObjects) {
-                if (inventory.IsInInventory(inventoryObject)) {
+           
+                if ((isSpecialObject && inventory.GetSpecialInventoryObject() == inventoryObject) || (!isSpecialObject && inventory.IsInInventory(inventoryObject))) {
                     oneExists = true;
                 }
             }
@@ -32,7 +38,6 @@ namespace Zhdk.Gamelab.InventorySystem {
                 onIsNotInventoryEvent.Invoke();
             }
         }
-
     }
 }
 

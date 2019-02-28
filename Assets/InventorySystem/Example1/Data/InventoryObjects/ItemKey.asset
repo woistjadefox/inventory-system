@@ -3,15 +3,16 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ec14510c65204eb9977f9ba46b7b5c9, type: 3}
-  m_Name: Key
+  m_Name: ItemKey
   m_EditorClassIdentifier: 
   title: Key
   description: The incredible magic key
   sprite: {fileID: 21300000, guid: 13b9c512f30534c3dbc9f3421b8f9949, type: 3}
-  prefab: {fileID: 1648504763691228, guid: 87d22963457b34df993a0a828b787ec9, type: 2}
+  prefab: {fileID: 1648504763691228, guid: 87d22963457b34df993a0a828b787ec9, type: 3}
