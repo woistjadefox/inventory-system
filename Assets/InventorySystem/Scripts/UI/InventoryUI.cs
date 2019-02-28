@@ -103,6 +103,9 @@ namespace Zhdk.Gamelab.InventorySystem
                 AddInventoryObject(inventoryObject);
             }
 
+            // cleanup existing scene inventory objects which are already stored in the inventory
+            inventory.CleanupExistingSceneInventoryObjects();
+
             // add special inventory object if existing
             if (inventory.GetSpecialInventoryObject() != null) {
                 AddInventoryObject(inventory.GetSpecialInventoryObject(), true);

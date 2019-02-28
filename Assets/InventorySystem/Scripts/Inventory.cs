@@ -17,6 +17,8 @@ namespace Zhdk.Gamelab.InventorySystem
         private string description = "";
         [SerializeField]
         private int inventorySlots = 15;
+        [SerializeField, Tooltip("Cleanup existing scene inventory objects which are already stored in this inventory.")]
+        private bool sceneCleanUp;
         [SerializeField]
         private bool logWarnings = false;
 
@@ -153,6 +155,19 @@ namespace Zhdk.Gamelab.InventorySystem
             }
 
             return false;
+        }
+
+        public void CleanupExistingSceneInventoryObjects()
+        {
+            if(sceneCleanUp)
+            {
+                foreach(InventoryHolder holder in FindObjectsOfType<InventoryHolder>())
+                {
+                    if(holder.GetInventory() == this && IsInInventory(holder.GetInventoryObject())){
+                        holder.Delete();
+                    }
+                }
+            }
         }
 
         public void AddOnInventoryUpdateListener(OnInventoryUpdate listener) 
