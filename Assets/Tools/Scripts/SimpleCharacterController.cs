@@ -4,20 +4,13 @@
 public class SimpleCharacterController : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField]
-    private float walkSpeed = 8f;
-    [SerializeField]
-    private float jumpSpeed = 8f;
-    [SerializeField]
-    private float jumpTime = 1f;
-    [SerializeField]
-    private float gravity = -2f;
-    [SerializeField]
-    private float groundRaycastOffset = -0.5f;
-    [SerializeField]
-    private float groundRaycastLength = 0.5f;
-    [SerializeField]
-    private LayerMask groundLayers;
+    [SerializeField] private float walkSpeed = 8f;
+    [SerializeField] private float jumpSpeed = 8f;
+    [SerializeField] private float jumpTime = 1f;
+    [SerializeField] private float gravity = -2f;
+    [SerializeField] private float groundRaycastOffset = -0.5f;
+    [SerializeField] private float groundRaycastLength = 0.5f;
+    [SerializeField] private LayerMask groundLayers;
 
     private Vector2 inputAxis;
     private bool inputJump;
@@ -31,14 +24,8 @@ public class SimpleCharacterController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
-
         // cache all input data in update loop
         inputAxis.x = Input.GetAxis("Horizontal");
         inputAxis.y = Input.GetAxis("Vertical");
@@ -53,7 +40,6 @@ public class SimpleCharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         // check if character is grounded
         bool isGrounded = IsGrounded();
 

@@ -2,54 +2,48 @@
 
 namespace Zhdk.Gamelab.InventorySystem
 {
-
+    [CreateAssetMenu(fileName = "NewInventoryObject", menuName = "Inventory System/Inventory Object", order = 0)]
     public class InventoryObject : ScriptableObject
     {
         [Header("Infos")]
-        [SerializeField]
-        private string title;
-        [SerializeField]
-        private string description;
+        [SerializeField] private string title;
+        [SerializeField] private string description;
 
         [Header("References")]
-        [SerializeField]
-        private Sprite sprite;
-        [SerializeField]
-        private GameObject prefab;
+        [SerializeField] private Sprite sprite;
+        [SerializeField] private GameObject prefab;
 
-        [System.NonSerialized]
-        private int pos = 0;
+        [System.NonSerialized] private int pos = 0;
 
-        public string GetTitle ()
+        public string GetTitle()
         {
             return title;
         }
 
-        public string GetDescription () 
+        public string GetDescription()
         {
             return description;
         }
 
-        public Sprite GetSprite () 
+        public Sprite GetSprite()
         {
             return sprite;
         }
 
-        public GameObject GetPrefab () 
+        public GameObject GetPrefab()
         {
             return prefab;
         }
 
-        public void SetCurrentPos(int pos) 
+        public void SetCurrentPos(int pos)
         {
             this.pos = pos;
         }
 
-        public int GetCurrentPos() 
+        public int GetCurrentPos()
         {
             return pos;
         }
-
     }
 
 }

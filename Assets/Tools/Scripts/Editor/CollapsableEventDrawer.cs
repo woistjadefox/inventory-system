@@ -21,7 +21,6 @@ public class CollapsableEventDrawer : UnityEventDrawer
     private const float BUTTON_SPACING = 30;
     private static readonly BindingFlags NON_PULIC_INSTANCE_FLAGS = BindingFlags.NonPublic | BindingFlags.Instance;
 
-
     // Points the field inside Sate which has the reorderable list. 
     private static FieldInfo _stateReorderableListFieldInfo;
     // Points to the GetState method defined in UnityEventDrawer. 
@@ -30,13 +29,10 @@ public class CollapsableEventDrawer : UnityEventDrawer
     private static object[] _getStateArgs = new object[1];
     // A class that contains all the custom styling we need
     private static Styles _styles;
-
-
     // True if we have persistent calls and false if we don't.
     private bool _hasPersistentCalls;
     // Holds all our reorderable lists that belong to our state 
     private IDictionary<State, ReorderableList> _lists;
-
 
     /// <summary>
     /// Used to initialize our values.
@@ -45,7 +41,6 @@ public class CollapsableEventDrawer : UnityEventDrawer
     {
         _lists = new Dictionary<State, ReorderableList>();
     }
-
 
     /// <summary>
     /// A wrapper around the GetState function that is private in <see cref="UnityEventDrawer"/>
@@ -137,7 +132,6 @@ public class CollapsableEventDrawer : UnityEventDrawer
             }
         }
     }
-
 
     /// <summary>
     /// Gets the internal instance of the <see cref="ReorderableList"/> that exists

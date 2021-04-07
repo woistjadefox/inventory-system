@@ -4,89 +4,83 @@ using System.Collections.Generic;
 
 namespace Zhdk.Gamelab.InventorySystem
 {
-
     public class InventoryUI : MonoBehaviour
     {
-
         public delegate void OnDropInventoryUIObject(InventoryUIObject inventoryUIObject);
 
         [Header("References")]
-        [SerializeField]
-        private Inventory inventory;
-        [SerializeField]
-        private InventoryUISlot slotSpecial;
-        [SerializeField]
-        private GameObject panel;
-        [SerializeField]
-        private GameObject panelDescription;
-        [SerializeField]
-        private Text textTitle;
-        [SerializeField]
-        private Text textDescription;
+        [SerializeField] private Inventory inventory;
+        [SerializeField] private InventoryUISlot slotSpecial;
+        [SerializeField] private GameObject panel;
+        [SerializeField] private GameObject panelDescription;
+        [SerializeField] private Text textTitle;
+        [SerializeField] private Text textDescription;
 
         [Header("Templates")]
-        [SerializeField]
-        private InventoryUISlot inventoryUISlotTemplate;
-        [SerializeField]
-        private InventoryUIObject inventoryUIObjectTemplate;
-
-        [SerializeField]
-        private List<InventoryUISlot> slots;
+        [SerializeField] private InventoryUISlot inventoryUISlotTemplate;
+        [SerializeField] private InventoryUIObject inventoryUIObjectTemplate;
+        [SerializeField] private List<InventoryUISlot> slots;
 
         private InventoryUIObject currentSelectedInventoryUIObject;
         private event OnDropInventoryUIObject onDropInventoryUIObject;
 
-		private void OnDestroy()
-		{
+        private void OnDestroy()
+        {
             inventory.RemoveOnInventoryUpdateListener(OnInventoryUpdate);
-		}
+        }
 
         private void OnInventoryUpdate(Inventory.InventoryUpdateType type, InventoryObject inventoryObject)
         {
-            if (type == Inventory.InventoryUpdateType.Add) {
+            if (type == Inventory.InventoryUpdateType.Add)
+            {
                 AddInventoryObject(inventoryObject);
             }
 
-            if (type == Inventory.InventoryUpdateType.Remove) {
+            if (type == Inventory.InventoryUpdateType.Remove)
+            {
                 RemoveInventoryObject(inventoryObject);
             }
         }
 
-        public void OnSlotChange(InventoryUISlot newSlot, InventoryUIObject inventoryUIObject) {
-
+        public void OnSlotChange(InventoryUISlot newSlot, InventoryUIObject inventoryUIObject)
+        {
             bool isSpecial = inventoryUIObject.GetInventoryObject() == inventory.GetSpecialInventoryObject();
 
             // normal object to special
-            if(isSpecial == false && newSlot == slotSpecial) {
+            if (isSpecial == false && newSlot == slotSpecial)
+            {
                 inventory.MoveNormalInventoryObjectToSpecial(inventoryUIObject.GetInventoryObject());
             }
 
             // special object to normal
-            if(isSpecial && newSlot != slotSpecial) {
+            if (isSpecial && newSlot != slotSpecial)
+            {
                 inventory.MoveSpecialInventoryObjectToNormal(inventoryUIObject.GetInventoryObject());
             }
 
             // set wish pos
-            if(newSlot != slotSpecial) {
+            if (newSlot != slotSpecial)
+            {
                 inventoryUIObject.GetInventoryObject().SetCurrentPos(slots.IndexOf(newSlot));
-            } else {
+            }
+            else
+            {
                 inventoryUIObject.GetInventoryObject().SetCurrentPos(0);
             }
         }
 
-		private void Start()
+        private void Start()
         {
-
-            if(inventory == null) {
+            if (inventory == null)
+            {
                 throw new System.Exception("You need to link an inventory object to the this component");
             }
 
             Init();
-
         }
 
-		private void Init()
-		{
+        private void Init()
+        {
             // add update listener
             inventory.AddOnInventoryUpdateListener(OnInventoryUpdate);
 
@@ -99,7 +93,8 @@ namespace Zhdk.Gamelab.InventorySystem
             InstantiateNewSlots(inventory.GetSlotCount());
 
             // add all existing inventory objects
-            foreach (InventoryObject inventoryObject in inventory.GetInventoryObjects()) {
+            foreach (InventoryObject inventoryObject in inventory.GetInventoryObjects())
+            {
                 AddInventoryObject(inventoryObject);
             }
 
@@ -107,39 +102,41 @@ namespace Zhdk.Gamelab.InventorySystem
             inventory.CleanupExistingSceneInventoryObjects();
 
             // add special inventory object if existing
-            if (inventory.GetSpecialInventoryObject() != null) {
+            if (inventory.GetSpecialInventoryObject() != null)
+            {
                 AddInventoryObject(inventory.GetSpecialInventoryObject(), true);
             }
-		}
-       
-       
-        public void TogglePanel() 
+        }
+
+
+        public void TogglePanel()
         {
-            if(InventoryUIObject.currentObject == null) {
+            if (InventoryUIObject.currentObject == null)
+            {
                 if (panel.activeSelf) panelDescription.SetActive(false);
                 panel.SetActive(!panel.activeSelf);
             }
-
         }
 
-        public InventoryUISlot GetNextFreeSlot(int wishPos) 
+        public InventoryUISlot GetNextFreeSlot(int wishPos)
         {
-
-            if(wishPos != -1 && slots.Count > wishPos && slots[wishPos] != null) {
+            if (wishPos != -1 && slots.Count > wishPos && slots[wishPos] != null)
+            {
                 if (slots[wishPos].IsEmpty()) return slots[wishPos];
             }
 
-            foreach (InventoryUISlot slot in slots){
+            foreach (InventoryUISlot slot in slots)
+            {
                 if (slot.IsEmpty()) return slot;
             }
 
             return null;
         }
 
-        public void InstantiateNewSlots(int amount) 
+        public void InstantiateNewSlots(int amount)
         {
-            for (int i = 0; i < amount; i++) {
-                
+            for (int i = 0; i < amount; i++)
+            {
                 GameObject templateClone = Instantiate(inventoryUISlotTemplate.gameObject, Vector3.zero, Quaternion.identity);
                 templateClone.name = "Slot" + i;
                 InventoryUISlot slot = templateClone.GetComponent<InventoryUISlot>();
@@ -153,18 +150,22 @@ namespace Zhdk.Gamelab.InventorySystem
             }
         }
 
-        public bool AddInventoryObject(InventoryObject inventoryObject, bool isSpecial = false) {
-
+        public bool AddInventoryObject(InventoryObject inventoryObject, bool isSpecial = false)
+        {
             InventoryUISlot nextFreeSlot;
 
             // get next free slot
-            if(isSpecial && slotSpecial.IsEmpty()) {
+            if (isSpecial && slotSpecial.IsEmpty())
+            {
                 nextFreeSlot = slotSpecial;
-            } else {
+            }
+            else
+            {
                 nextFreeSlot = GetNextFreeSlot(inventoryObject.GetCurrentPos());
             }
 
-            if(nextFreeSlot != null) {
+            if (nextFreeSlot != null)
+            {
 
                 // create new inventory ui object from template
                 GameObject templateClone = Instantiate(inventoryUIObjectTemplate.gameObject, Vector3.zero, Quaternion.identity);
@@ -187,51 +188,54 @@ namespace Zhdk.Gamelab.InventorySystem
 
         public bool RemoveInventoryObject(InventoryObject inventoryObject)
         {
-
             bool success = false;
 
-            if(slotSpecial.IsEmpty() == false && slotSpecial.GetInventoryUIObject().GetInventoryObject() == inventoryObject) {
-
+            if (slotSpecial.IsEmpty() == false && slotSpecial.GetInventoryUIObject().GetInventoryObject() == inventoryObject)
+            {
                 Destroy(slotSpecial.GetInventoryUIObject().gameObject);
                 slotSpecial.SetInventoryUIObject(null);
                 success = true;
-
-            } else {
-
-                foreach (InventoryUISlot slot in slots) {
+            }
+            else
+            {
+                foreach (InventoryUISlot slot in slots)
+                {
                     if (slot.IsEmpty()) continue;
 
-                    if (slot.GetInventoryUIObject().GetInventoryObject() == inventoryObject) {
+                    if (slot.GetInventoryUIObject().GetInventoryObject() == inventoryObject)
+                    {
                         Destroy(slot.GetInventoryUIObject().gameObject);
                         slot.SetInventoryUIObject(null);
                         success = true;
                     }
                 }
             }
-            
+
             return success;
         }
 
-        public void SelectInventoryUIObject(InventoryUIObject inventoryUIObject) {
-
+        public void SelectInventoryUIObject(InventoryUIObject inventoryUIObject)
+        {
             textTitle.text = inventoryUIObject.GetInventoryObject().GetTitle();
             textDescription.text = inventoryUIObject.GetInventoryObject().GetDescription();
             panelDescription.SetActive(true);
-
             currentSelectedInventoryUIObject = inventoryUIObject;
         }
 
-        public void DropCurrentSelectedInventoryUIObject() {
+        public void DropCurrentSelectedInventoryUIObject()
+        {
             inventory.RemoveInventoryObject(currentSelectedInventoryUIObject.GetInventoryObject());
-            if(onDropInventoryUIObject != null) onDropInventoryUIObject(currentSelectedInventoryUIObject);
+            if (onDropInventoryUIObject != null) onDropInventoryUIObject(currentSelectedInventoryUIObject);
             panelDescription.SetActive(false);
         }
 
-        public void AddOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener) {
+        public void AddOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener)
+        {
             onDropInventoryUIObject += listener;
         }
 
-        public void RemoveOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener) {
+        public void RemoveOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener)
+        {
             onDropInventoryUIObject -= listener;
         }
     }

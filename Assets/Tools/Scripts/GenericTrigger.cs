@@ -1,34 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericTrigger : MonoBehaviour {
-
+public class GenericTrigger : MonoBehaviour
+{
     [Header("Settings")]
-    [SerializeField]
-    private bool ignoreIncomingTrigger = true;
-    [SerializeField]
-    private LayerMask layerMask;
-    [SerializeField]
-    private Collider[] specificCollider;
+    [SerializeField] private bool ignoreIncomingTrigger = true;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private Collider[] specificCollider;
 
     [Header("Events")]
-    [SerializeField]
-    private UnityEvent onEnter;
-    [SerializeField]
-    private UnityEvent onExit;
+    [SerializeField] private UnityEvent onEnter;
+    [SerializeField] private UnityEvent onExit;
 
     [Header("Key Events")]
-    [SerializeField]
-    private KeyCode onEnterKey = KeyCode.None;
-    [SerializeField]
-    private UnityEvent onEnterKeyDown;
+    [SerializeField] private KeyCode onEnterKey = KeyCode.None;
+    [SerializeField] private UnityEvent onEnterKeyDown;
 
     private bool isActive = false;
 
-
     private void OnTriggerEnter(Collider other)
     {
-        if (CheckConditions(other)) {
+        if (CheckConditions(other))
+        {
             isActive = true;
             onEnter.Invoke();
         }
@@ -36,38 +29,45 @@ public class GenericTrigger : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (CheckConditions(other)) {
+        if (CheckConditions(other))
+        {
             isActive = false;
             onExit.Invoke();
         }
     }
 
-    private void Update() {
-        if(isActive && onEnterKey != KeyCode.None && Input.GetKeyDown(onEnterKey)) {
+    private void Update()
+    {
+        if (isActive && onEnterKey != KeyCode.None && Input.GetKeyDown(onEnterKey))
+        {
             onEnterKeyDown.Invoke();
         }
     }
 
-    private bool CheckConditions(Collider other) 
+    private bool CheckConditions(Collider other)
     {
-        if (ignoreIncomingTrigger && other.isTrigger) {
+        if (ignoreIncomingTrigger && other.isTrigger)
+        {
             return false;
         }
 
-        if (CheckSpecificCollider(other) == false) {
+        if (CheckSpecificCollider(other) == false)
+        {
             return false;
         }
 
-        if (IsInLayerMask(other.gameObject.layer, layerMask) == false) {
+        if (IsInLayerMask(other.gameObject.layer, layerMask) == false)
+        {
             return false;
         }
 
         return true;
     }
 
-    private bool CheckSpecificCollider(Collider targetCollider) {
-
-        if (specificCollider.Length > 0) {
+    private bool CheckSpecificCollider(Collider targetCollider)
+    {
+        if (specificCollider.Length > 0)
+        {
 
             bool foundSpecificCollider = false;
 
@@ -78,13 +78,15 @@ public class GenericTrigger : MonoBehaviour {
 
             return foundSpecificCollider;
 
-        } else {
+        }
+        else
+        {
             return true;
         }
     }
 
-    private bool IsInLayerMask(int layer, LayerMask layermask) {
+    private bool IsInLayerMask(int layer, LayerMask layermask)
+    {
         return layermask == (layermask | (1 << layer));
     }
-
 }

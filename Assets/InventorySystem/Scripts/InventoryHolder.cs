@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 
-namespace Zhdk.Gamelab.InventorySystem {
-
-    public class InventoryHolder : MonoBehaviour {
+namespace Zhdk.Gamelab.InventorySystem
+{
+    public class InventoryHolder : MonoBehaviour
+    {
         [Header("References")]
-        [SerializeField]
-        private InventoryObject inventoryObject;
-        [SerializeField]
-        private Inventory inventory;
+        [SerializeField] private InventoryObject inventoryObject;
+        [SerializeField] private Inventory inventory;
 
         [Header("Pickup Settings")]
-        [SerializeField]
-        private bool deleteOnPickup = true;
+        [SerializeField] private bool deleteOnPickup = true;
 
         public Inventory GetInventory()
         {
@@ -23,9 +21,10 @@ namespace Zhdk.Gamelab.InventorySystem {
             return inventoryObject;
         }
 
-        public void PickUp() {
-
-            if (inventory.AddInventoryObject(inventoryObject)) {
+        public void PickUp()
+        {
+            if (inventory.AddInventoryObject(inventoryObject))
+            {
                 if (deleteOnPickup) Destroy(gameObject);
             }
         }
@@ -34,7 +33,6 @@ namespace Zhdk.Gamelab.InventorySystem {
         {
             Destroy(gameObject);
         }
-
     }
 }
 

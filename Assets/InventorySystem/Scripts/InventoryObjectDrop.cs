@@ -1,32 +1,34 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Zhdk.Gamelab.InventorySystem {
-
-    public class InventoryObjectDrop : MonoBehaviour {
+namespace Zhdk.Gamelab.InventorySystem
+{
+    public class InventoryObjectDrop : MonoBehaviour
+    {
         [Header("References")]
-        [SerializeField]
-        private InventoryUI inventoryUI;
+        [SerializeField] private InventoryUI inventoryUI;
 
         [Header("Events")]
-        [SerializeField]
-        private UnityEvent onDrop;
+        [SerializeField] private UnityEvent onDrop;
 
-        private void OnDestroy() {
-            if (inventoryUI != null) {
+        private void OnDestroy()
+        {
+            if (inventoryUI != null)
+            {
                 inventoryUI.RemoveOnDropInventoryUIObjectListener(OnDrop);
             }
         }
 
-        private void Start() {
+        private void Start()
+        {
             inventoryUI.AddOnDropInventoryUIObjectListener(OnDrop);
         }
 
-        public void OnDrop(InventoryUIObject inventoryUIObject) {
+        public void OnDrop(InventoryUIObject inventoryUIObject)
+        {
             Instantiate(inventoryUIObject.GetInventoryObject().GetPrefab(), transform.position, Quaternion.identity);
             onDrop.Invoke();
         }
-
     }
 }
 
