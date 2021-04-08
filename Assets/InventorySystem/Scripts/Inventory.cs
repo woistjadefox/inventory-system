@@ -54,6 +54,7 @@ namespace Zhdk.Gamelab.InventorySystem
 
                 foreach (InventoryObject iObj in startInventoryObjects)
                 {
+                    if (iObj == null) continue;
                     inventoryObjects.Add(iObj);
                 }
 
