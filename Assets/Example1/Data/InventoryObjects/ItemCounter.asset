@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2e6c27a8c1eb547b12073a49b30631, type: 3}
+  m_Name: ItemCounter
+  m_EditorClassIdentifier: 
+  title: Counter
+  description: This Item counts the time it got picked up
+  sprite: {fileID: 21300000, guid: 9d7c6e4896067aa4fa512a00f692ac1c, type: 3}
+  prefab: {fileID: 4469877904674312042, guid: d18d672098cfc9f46b19cc5017786119, type: 3}
+  counter: 0

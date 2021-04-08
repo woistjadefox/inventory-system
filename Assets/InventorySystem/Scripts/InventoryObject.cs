@@ -44,6 +44,16 @@ namespace Zhdk.Gamelab.InventorySystem
         {
             return pos;
         }
+
+        public virtual void OnAddToInventory(Inventory inventory)
+        {
+ 
+        }
+
+        public virtual void OnRemoveFromInventory(Inventory inventory)
+        {
+
+        }
     }
 
 }

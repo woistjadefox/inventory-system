@@ -90,6 +90,7 @@ namespace Zhdk.Gamelab.InventorySystem
                     if (inventoryObjects.Contains(inventoryObject) == false && inventoryObject != specialInventoryObject)
                     {
                         inventoryObjects.Add(inventoryObject);
+                        inventoryObject.OnAddToInventory(this);
                         success = true;
                     }
                     else
@@ -121,6 +122,7 @@ namespace Zhdk.Gamelab.InventorySystem
                 if (inventoryObjects.Contains(inventoryObject))
                 {
                     inventoryObjects.Remove(inventoryObject);
+                    inventoryObject.OnRemoveFromInventory(this);
                     success = true;
                 }
                 else
