@@ -15,7 +15,7 @@ MonoBehaviour:
   title: Character Inventory
   description: The incredible character inventory
   inventorySlots: 15
-  sceneCleanUp: 0
+  sceneCleanUp: 1
   logWarnings: 1
   startSpecialInventoryObject: {fileID: 0}
   startInventoryObjects: []

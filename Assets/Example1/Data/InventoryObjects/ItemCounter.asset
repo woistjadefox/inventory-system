@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ItemCounter
   m_EditorClassIdentifier: 
   title: Counter
-  description: This Item counts the time it got picked up
-  sprite: {fileID: 21300000, guid: 9d7c6e4896067aa4fa512a00f692ac1c, type: 3}
+  description: This Item counts the times it got picked up
+  sprite: {fileID: 21300000, guid: 7cb324f99964b4352959d9578d94ac3e, type: 3}
   prefab: {fileID: 4469877904674312042, guid: d18d672098cfc9f46b19cc5017786119, type: 3}
-  counter: 0
+  counter: 2
