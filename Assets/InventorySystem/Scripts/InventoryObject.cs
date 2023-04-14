@@ -6,21 +6,21 @@ namespace Zhdk.Gamelab.InventorySystem
     public class InventoryObject : ScriptableObject
     {
         [Header("Infos")]
-        [SerializeField] private string title;
-        [SerializeField] private string description;
+        [SerializeField] protected string title;
+        [SerializeField] protected string description;
 
         [Header("References")]
-        [SerializeField] private Sprite sprite;
-        [SerializeField] private GameObject prefab;
+        [SerializeField] protected Sprite sprite;
+        [SerializeField] protected GameObject prefab;
 
         [System.NonSerialized] private int pos = 0;
 
-        public string GetTitle()
+        public virtual string GetTitle()
         {
             return title;
         }
 
-        public string GetDescription()
+        public virtual string GetDescription()
         {
             return description;
         }
@@ -51,6 +51,11 @@ namespace Zhdk.Gamelab.InventorySystem
         }
 
         public virtual void OnRemoveFromInventory(Inventory inventory)
+        {
+
+        }
+
+        public virtual void OnSlotChange(InventoryUISlot slot, bool isSpecialSlot)
         {
 
         }

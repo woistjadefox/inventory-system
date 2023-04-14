@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Character Inventory
   description: The incredible character inventory
-  inventorySlots: 15
+  inventorySlots: 20
   sceneCleanUp: 1
   logWarnings: 1
   startSpecialInventoryObject: {fileID: 0}

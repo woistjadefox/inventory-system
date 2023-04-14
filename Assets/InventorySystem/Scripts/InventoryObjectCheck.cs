@@ -10,7 +10,9 @@ namespace Zhdk.Gamelab.InventorySystem
         [SerializeField] private Inventory inventory;
 
         [Header("Settings")]
-        [SerializeField] private bool isSpecialObject;
+        [SerializeField] private bool mustHaveAllObjects;
+        [SerializeField] private bool oneIsInSpecialSlot;
+
 
         [Header("Events")]
         [SerializeField] private UnityEvent onIsInventoryEvent;
@@ -18,25 +20,38 @@ namespace Zhdk.Gamelab.InventorySystem
 
         public void Check()
         {
-            bool oneExists = false;
+            int existsCounter = 0;
+            bool specialObject = false;
 
             foreach (InventoryObject inventoryObject in inventoryObjects)
             {
-                if ((isSpecialObject && inventory.GetSpecialInventoryObject() == inventoryObject) 
-                    || (!isSpecialObject && inventory.IsInInventory(inventoryObject)))
+                if ((inventory.IsInInventory(inventoryObject) == inventoryObject))
                 {
-                    oneExists = true;
+                    existsCounter++;
+
+                    if (oneIsInSpecialSlot && inventory.GetSpecialInventoryObject() == inventoryObject)
+                    {
+                        specialObject = true;
+                    }
                 }
             }
 
-            if (oneExists)
+            if(mustHaveAllObjects && existsCounter == inventoryObjects.Length || mustHaveAllObjects == false && existsCounter > 0)
             {
-                onIsInventoryEvent.Invoke();
-            }
-            else
+                if(oneIsInSpecialSlot && specialObject || oneIsInSpecialSlot == false)
+                {
+                    onIsInventoryEvent.Invoke();
+                }
+                else
+                {
+                    onIsNotInventoryEvent.Invoke();
+                }
+
+            } else
             {
                 onIsNotInventoryEvent.Invoke();
             }
+            
         }
     }
 }

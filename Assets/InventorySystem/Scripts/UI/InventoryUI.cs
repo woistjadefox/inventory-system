@@ -67,6 +67,9 @@ namespace Zhdk.Gamelab.InventorySystem
             {
                 inventoryUIObject.GetInventoryObject().SetCurrentPos(0);
             }
+
+            // inform inventor object about slot change
+            inventoryUIObject.GetInventoryObject().OnSlotChange(newSlot, newSlot == slotSpecial);
         }
 
         private void Start()
@@ -237,6 +240,15 @@ namespace Zhdk.Gamelab.InventorySystem
         public void RemoveOnDropInventoryUIObjectListener(OnDropInventoryUIObject listener)
         {
             onDropInventoryUIObject -= listener;
+        }
+
+        public void UpdateCurrentlySelectedUIObjectInfo()
+        {
+            if (currentSelectedInventoryUIObject != null)
+            {
+                textTitle.text = currentSelectedInventoryUIObject.GetInventoryObject().GetTitle();
+                textDescription.text = currentSelectedInventoryUIObject.GetInventoryObject().GetDescription();
+            }
         }
     }
 }
