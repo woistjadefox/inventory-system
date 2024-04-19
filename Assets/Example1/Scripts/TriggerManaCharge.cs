@@ -18,6 +18,11 @@ public class TriggerManaCharge : MonoBehaviour
 
     public void ChargeManaEnter()
     {
+        if(targetInventory == null)
+        {
+            Debug.Log("target inventory is null");
+        }
+
         var specialObject = targetInventory.GetSpecialInventoryObject();
 
         if (specialObject != null && specialObject is ItemMana)

@@ -20,6 +20,6 @@ public class ItemMana : InventoryObject
 
     public override string GetTitle()
     {
-        return title + " 0/" + Mathf.RoundToInt(mana);
+        return title + " (Value: " + Mathf.RoundToInt(mana) +")";
     }
 }
