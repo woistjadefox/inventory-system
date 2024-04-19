@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718e48b5007d24396915bc3884dcebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetInventory: {fileID: 0}
+  targetInventory: {fileID: 11400000, guid: 1269d4b6e737d4b2caaa3d50d47f66af, type: 2}
   targetMana: 80
   onManaCheckOk:
     m_PersistentCalls:
